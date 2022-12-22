@@ -1,87 +1,112 @@
-import java.nio.file.attribute.AclEntryPermission;
+package PilhaDuplamenteEncadeada;
 
 public class Pilha{
     private Elemento inicio;
     private Elemento fim;
     private int tamanho;
-
+    
     public Pilha() {
-        this.tamanho = 0;
+        this.inicio = null;
+        this.fim = null;
+        this.tamanho=0; 
     }
-    public void removerInicio(){
-        if(this.tamanho>1){
-            this.inicio = this.inicio.getProximo();
-            this.tamanho--;
-        }else if(this.tamanho==1){
-            this.inicio=null;
-            this.fim=null;
-            this.tamanho--;
-        }
-    }
-    public void removerFinal(){
-        Elemento anterior = null;
-        Elemento atual = this.inicio;
-        if(this.tamanho > 1){
-            for (int i=0; i<tamanho-1; i++){
-                anterior = atual;
-                atual = atual.getProximo();
-            }
-            anterior.setProximo(this.fim.getProximo());
-            this.fim = anterior;
-            this.tamanho--;
-            atual = null; 
-        }else if(this.tamanho==1){
-            this.inicio = null;
-            this.fim = null;
-            this.tamanho--;
+    public void adicionarFim(Object valor){
+        Elemento aux = this.inicio;
+        Elemento ele = new Elemento(valor);
+        if(this.inicio == null){
+            ele.setProximo(null);
+            ele.setAnterior(null);
+            this.inicio = ele;
+            this.fim = ele;
+            this.tamanho++;
         }else{
-            System.out.println("Não foi possivel remover!");
+            while(aux.getProximo() != null){
+                aux = aux.getProximo();
+            }
+            ele.setAnterior(aux);
+            aux.setProximo(ele);
+            ele.setProximo(null);
+            this.fim = ele;
+            this.tamanho++;
         }
+    }
+    public void adicionarInicio(Object valor){
+        Elemento ele = new Elemento(valor);
+        Elemento aux = this.inicio;
+        ele.setAnterior(null);
+        ele.setProximo(aux);
+        this.inicio.setAnterior(ele);
+        this.inicio = ele;
+        this.tamanho++;
+    }
+    public void adicionar(Object valor, Object elemento){
+        Elemento ele = new Elemento(valor);
+        Elemento atual = this.inicio;
+        if(this.inicio.getElemento().equals(elemento)){
+            atual.setAnterior(ele);
+            ele.setProximo(atual);
+            ele.setAnterior(null);
+            this.inicio=ele;
+            this.tamanho++;
+        }else if(this.fim.getElemento().equals(elemento)){
+            Elemento fina = this.fim;
+            Elemento anterior = fina.getAnterior();
+            anterior.setProximo(ele);
+            ele.setAnterior(anterior);
+            ele.setProximo(fina);
+            fina.setAnterior(ele);
+            this.tamanho++;
+        }else{
+            while (!(atual.getElemento().equals(elemento))){
+                    atual = atual.getProximo();
+            }
+            Elemento anterior = atual.getAnterior();
+            ele.setAnterior(anterior);
+            anterior.setProximo(ele);
+            ele.setProximo(atual);
+            atual.setAnterior(ele);
+            this.tamanho++; 
+        }
+    }
+    private void removerFim(){
+        Elemento aux = this.fim.getAnterior();
+        Elemento ult = this.fim;
+        ult.setAnterior(null);
+        ult = null;
+        aux.setProximo(null);
+        this.fim = aux;
+        this.tamanho--;
+    }
+    private void removerInicio(){
+        Elemento aux = this.inicio;
+        Elemento proximo = this.inicio.getProximo();
+        aux.setProximo(null);
+        proximo.setAnterior(null);
+        aux = null;
+        this.inicio=proximo;
+        this.tamanho--;
     }
     public void remover(Object valor){
-        Elemento anterior = null;
-        Elemento atual = this.inicio;
-        for (int i=0; i< this.tamanho; i++){
-            if (atual.getElemento().equals(valor)){
-                anterior.setProximo(atual.getProximo());
-                atual = null;
-                this.tamanho--;
-                break;
-            }
-            anterior = atual;
-            atual = atual.getProximo();
-        }
-    }
-    public void adicionar(Object valor){
-        Elemento elemento = new Elemento(valor);
-        if (this.inicio == null && this.fim == null){
-            this.inicio = elemento;
-            this.fim = elemento;
-            this.tamanho++;
+        Elemento ele = new Elemento(valor);
+        if(this.inicio.getElemento().equals(ele.getElemento())){
+            removerInicio();
+        }else if(this.fim.getElemento().equals(ele.getElemento())){
+            removerFim();
         }else{
-            this.fim.setProximo(elemento);
-            this.fim = elemento;
-            this.tamanho++;
-        }
-    }
-    public Elemento get(int posicao){
-        Elemento atual = this.inicio;
-        for (int i=0; i< posicao; i++){
-            if (atual.getProximo() != null){
+            Elemento atual = this.inicio;
+            while(!(ele.getElemento().equals(atual.getElemento()))){
                 atual = atual.getProximo();
             }
+            Elemento anterior = atual.getAnterior();
+            Elemento proximo = atual.getProximo();
+            anterior.setProximo(proximo);
+            proximo.setAnterior(anterior);
+            atual = null;
+            this.tamanho--;
         }
-        return atual;
     }
-    public int getElemento(Object valor){
-        Elemento atual = this.inicio;
-        for (int i=0; i<this.tamanho; i++){
-            if (atual.getElemento().equals(valor)){
-                return i;
-            }
-            atual = atual.getProximo();
-        }    
-        return -1;
+    public int getTamanho(){
+        return this.tamanho;
     }
     public Elemento getInicio() {
         return inicio;
@@ -95,29 +120,16 @@ public class Pilha{
     public void setFim(Elemento fim) {
         this.fim = fim;
     }
-    public int getTamanho() {
-        return tamanho;
-    }
-    public void setTamanho(int tamanho) {
-        this.tamanho = tamanho;
-    }
     @Override
     public String toString() {
         String show = "";
-        Elemento atual = this.inicio;
-        if(atual!=null){
-            for (int i=1; i<=this.tamanho; i++){
-                show += atual.getElemento();
-                if (i<this.tamanho){
-                    show += ", ";
-                }else{
-                    show += ".";
-                }
-                atual = atual.getProximo();
-            }
+        Elemento aux = this.inicio;
+        while(aux != null){
+            show += aux.getElemento();
+            show += ", ";
+            aux = aux.getProximo();
         }
         return show;
+    
     }
-    
-    
 }

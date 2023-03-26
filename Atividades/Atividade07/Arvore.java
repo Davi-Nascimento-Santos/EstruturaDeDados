@@ -70,7 +70,7 @@ public class Arvore<T extends Comparable<T>> {
             return true;
         }
     }
-
+    
     public void printInOrder() {
         printInOrder(root);
     }

@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -48,10 +47,10 @@ class Main{
         Scanner scan = new Scanner(System.in);
         File file = new File("/home/davi/Documents/CienciaDaComputacao/2Periodo/EstruturaDeDados/Atividades/AtividadeFinal/questao01/leipzig100k.txt");
         try {
-            int opcao = 9; //menu();
+            int opcao = menu();
             Scanner scanner = new Scanner(file);
             int cont =0;
-            //long tempoInicial = System.nanoTime();
+            long tempoInicial = System.nanoTime();
             while (scanner.hasNext()) {
                 String linha = scanner.next();
                 Entry<String, Integer> no = new Entry<String, Integer>(linha, cont);
@@ -88,28 +87,142 @@ class Main{
                 }
                 cont++;
             }
-            //tabelaTreeSet.pop("AMÓS");
-            //System.out.println(tabelaTreeSet.get("AMÓS"));
-            //long tempoFinal = System.nanoTime();
-            //long tempoDecorrido = (tempoFinal - tempoInicial) / 1000000;
-            //System.out.println("Tempo de execução: " + tempoDecorrido);
+            long tempoFinal = System.nanoTime();
+            long tempoDecorrido = (tempoFinal - tempoInicial) / 1000000;
+            System.out.println("Tempo de execução: " + tempoDecorrido);
             scanner.close();
             String[] nomes = {"Lisbon", "NASA", "Kyunghee", "Konkuk", "Sogang", "momentarily", "rubella", "vaccinations", "government", "Authorities"};
+            
             //Pesquisa das palavras
-            for (int j=0; j<5; j++){   
-                long tempoInicial = System.nanoTime();
-                for (String n: nomes){
-                    tabelaTreeMap.get(n);
-                }
-                long tempoFinal = System.nanoTime();
-                long tempoDecorrido = (tempoFinal - tempoInicial);
-                System.out.println("Tempo de remoção: " + tempoDecorrido);
+            long tempoInicialv2 = System.nanoTime();
+            long tempoFinalv2 = 0;
+            long tempoDecorridov2 = 0;
+            switch(opcao){
+                case 1:
+                    for (String n: nomes){
+                        tabelaArray.get(n);
+                    }
+                    tempoFinalv2 = System.nanoTime();
+                    break;
+                case 2:
+                    for (String n: nomes){
+                        tabelaVector.get(n);
+                    }
+                    tempoFinalv2 = System.nanoTime();
+                    break;
+                case 3:
+                    for (String n: nomes){
+                        tabelaLinkedList.get(n);
+                    }
+                    tempoFinalv2 = System.nanoTime();
+                    break;
+                case 4:
+                    for (String n: nomes){
+                        tabelaHashSet.get(n);
+                    }
+                    tempoFinalv2 = System.nanoTime();
+                    break;
+                case 5:
+                    for (String n: nomes){
+                        tabelaLinkedHashSet.get(n);
+                    }
+                    tempoFinalv2 = System.nanoTime();
+                    break;
+                case 6:
+                    for (String n: nomes){
+                        tabelaTreeSet.get(n);
+                    }
+                    tempoFinalv2 = System.nanoTime();
+                    break;
+                case 7:
+                    for (String n: nomes){
+                        tabelaHashMap.get(n);
+                    }
+                    tempoFinalv2 = System.nanoTime();
+                    break;
+                case 8:
+                    for (String n: nomes){
+                        tabelaLinkedHashMap.get(n);
+                    }
+                    tempoFinalv2 = System.nanoTime();
+                    break;
+                case 9:
+                    for (String n: nomes){
+                        tabelaTreeMap.get(n);
+                    }
+                    tempoFinalv2 = System.nanoTime();
+                    break;
+                case 0:
+                    return;
             }
-            //Remoção das palavras
-            //for (String nome: nomes){
-            //    System.out.println(tabelaTreeSet.pop(nome));
-            //}
+            tempoDecorridov2 = (tempoFinalv2 - tempoInicialv2);
+            System.out.println("Tempo de pesquisa: " + tempoDecorridov2);
+            
 
+            //Remoção das palavras
+            long tempoInicialv3 = System.nanoTime();
+            long tempoFinalv3 = 0;
+            long tempoDecorridov3 = 0;
+            switch(opcao){
+                case 1:
+                    for (String n: nomes){
+                        tabelaArray.pop(n);
+                    }
+                    tempoFinalv3 = System.nanoTime();
+                    break;
+                case 2:
+                    for (String n: nomes){
+                        tabelaVector.pop(n);
+                    }
+                    tempoFinalv3 = System.nanoTime();
+                    break;
+                case 3:
+                    for (String n: nomes){
+                        tabelaLinkedList.pop(n);
+                    }
+                    tempoFinalv3 = System.nanoTime();
+                    break;
+                case 4:
+                    for (String n: nomes){
+                        tabelaHashSet.pop(n);
+                    }
+                    tempoFinalv3 = System.nanoTime();
+                    break;
+                case 5:
+                    for (String n: nomes){
+                        tabelaLinkedHashSet.pop(n);
+                    }
+                    tempoFinalv3 = System.nanoTime();
+                    break;
+                case 6:
+                    for (String n: nomes){
+                        tabelaTreeSet.pop(n);
+                    }
+                    tempoFinalv3 = System.nanoTime();
+                    break;
+                case 7:
+                    for (String n: nomes){
+                        tabelaHashMap.pop(n);
+                    }
+                    tempoFinalv3 = System.nanoTime();
+                    break;
+                case 8:
+                    for (String n: nomes){
+                        tabelaLinkedHashMap.remove(n);
+                    }
+                    tempoFinalv3 = System.nanoTime();
+                    break;
+                case 9:
+                    for (String n: nomes){
+                        tabelaTreeMap.remove(n);
+                    }
+                    tempoFinalv3 = System.nanoTime();
+                    break;
+                case 0:
+                    return;
+            }
+            tempoDecorridov3 = (tempoFinalv3 - tempoInicialv3);
+            System.out.println("Tempo de remoção: " + tempoDecorridov3);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

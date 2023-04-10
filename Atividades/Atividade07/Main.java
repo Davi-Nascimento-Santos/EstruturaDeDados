@@ -20,7 +20,7 @@ public class Main {
                     binaria.insert(nome);
                 }
                 case 2 -> {
-                    Path arquivo = Paths.get("/home/davi/Documents/CienciaDaComputacao/2Periodo/EstruturaDeDados/Atividades/Atividade07/nomes10k.txt");
+                    Path arquivo = Paths.get("/home/davi/Documents/CienciaDaComputacao/2Periodo/EstruturaDeDados/Atividades/Atividade07/nomes15.txt");
                     List<String> linhas = Files.readAllLines(arquivo);
                     for(String linha : linhas)
                         binaria.insert(linha);
